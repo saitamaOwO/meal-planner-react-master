@@ -5,10 +5,10 @@ const font = Schibsted_Grotesk({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main
-      className={`max-w-[1540px] w-full flex justify-center ${font.className}`}
-    >
-      <Component {...pageProps} />
-    </main>
+    <div className="w-full flex justify-center">
+      <main className={`max-w-[1540px] w-full ${font.className}`}>
+        <Component {...pageProps} />
+      </main>
+    </div>
   );
 }

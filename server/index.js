@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
 const pool = require("./database/database");
-
+const cors = require("cors");
 app.use(express.json());
+
+app.use(cors({ origin: "*" }));
 
 app.use("/", (req, res, next) => {
   console.log({ method: req.method, ip: req.ip, route: req.route });
