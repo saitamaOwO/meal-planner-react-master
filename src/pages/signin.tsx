@@ -1,16 +1,13 @@
 import { SIGN_IN } from "@/util/api";
 import axiosInstance from "@/util/axios";
 import setSession from "@/util/session";
-import Cookies from "js-cookie";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { FormEvent } from "react";
-
 export default function Signin() {
   const router = useRouter();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    console.log("CLICKED");
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const username = form.get("username") as string;
@@ -27,7 +24,8 @@ export default function Signin() {
       const { data } = await axiosInstance.post(SIGN_IN, requestBody);
       if (data.error) throw { err: data.message };
       setSession(requestBody.username, requestBody.password);
-      router.push("/plan");
+      alert("Signin success");
+      window.location.replace("/plan");
     } catch (error: any) {
       console.error({ error });
       alert(error.err || "Something went wrong");
@@ -115,7 +113,7 @@ export default function Signin() {
                   Sign in
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don’t have an account yet?{" "}
+                  Don't have an account yet?
                   <Link
                     href="/signup"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"

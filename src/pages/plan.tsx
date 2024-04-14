@@ -1,40 +1,51 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import axiosInstance from "@/util/axios";
+import { MEAL_PLAN, SAVE_PLAN } from "@/util/api";
 
-interface MealPlan {
+type MealPlan = {
   day: number;
   meal_type: string;
   meal_name: string;
   price: number;
-}
+};
 
-function App() {
-  const [budget, setBudget] = useState("");
-  const [mealPlan, setMealPlan] = useState<MealPlan[]>([]); // Explicitly type mealPlan
+export default function Plan() {
+  const [budget, setBudget] = useState<any>(0);
+  const [mealPlan, setMealPlan] = useState<MealPlan[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleBudgetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBudget(event.target.value);
-  };
-
-  const handleGetMealPlan = async () => {
+  async function handleGetMealPlan() {
     try {
       setLoading(true);
-      setError("");
-      const response = await axiosInstance.post("/api", { budget }); // Specify the response data type
-      setMealPlan(response.data);
-    } catch (error) {
-      console.error("Error fetching meal plan:", error);
-      setError("Failed to fetch meal plan. Please try again.");
+      const { data } = await axiosInstance.post(MEAL_PLAN, { budget });
+      console.log({ data });
+      if (data.error) throw { err: data.message };
+      console.log(data.payload);
+      setMealPlan(data.payload);
+    } catch (error: any) {
+      console.error(error);
+      alert(error.err || "Something went wrong");
+      setMealPlan([]);
     } finally {
       setLoading(false);
     }
-  };
+  }
+  async function saveMealPlan() {
+    if (!mealPlan.length) {
+      alert("Please make a valid plan beforing saving");
+      return;
+    }
+    try {
+      const { data } = await axiosInstance.post(SAVE_PLAN, { mealPlan });
+      if (data.error) throw { err: data.message };
+    } catch (error: any) {
+      console.error(error);
+      alert(error.err || "Something went wrong");
+    }
+  }
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto p-4 sm:p-7 md:p-10">
       <h1 className="text-3xl font-bold mb-4">Meal Planner</h1>
       <div className="mb-4">
         <label htmlFor="budget" className="mr-2">
@@ -43,46 +54,64 @@ function App() {
         <input
           type="number"
           id="budget"
-          value={budget}
-          onChange={handleBudgetChange}
-          className="border border-gray-300 rounded px-2 py-1 text-black"
+          onChange={(e) => setBudget(e.target.value)}
+          onWheel={(e) => e.currentTarget.blur()}
+          className="rounded border border-zinc-700 w-32 bg-black text-white px-2 py-1 outline-none"
         />
+
         <button
           onClick={handleGetMealPlan}
-          className="bg-blue-500 text-white px-4 py-1 ml-2 rounded hover:bg-blue-600"
+          className="bg-blue-500 border border-zinc-600 hover:scale-105 text-white px-4 py-1 ml-2 rounded hover:bg-black transition-all"
         >
           {loading ? "Loading..." : "Get Meal Plan"}
         </button>
       </div>
       <div>
-        {error && <p className="text-red-500">{error}</p>}
         {mealPlan.length > 0 ? (
-          <table className="table-auto bg-white">
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Day</th>
-                <th className="px-4 py-2">Meal Type</th>
-                <th className="px-4 py-2">Meal Name</th>
-                <th className="px-4 py-2">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mealPlan.map((meal, index) => (
-                <tr key={index} className="text-blue-500">
-                  <td className="border px-4 py-2">{meal.day}</td>
-                  <td className="border px-4 py-2">{meal.meal_type}</td>
-                  <td className="border px-4 py-2">{meal.meal_name}</td>
-                  <td className="border px-4 py-2">${meal.price}</td>
+          <div className="relative overflow-x-auto rounded-md">
+            <table className="w-full text-left rtl:text-right text-zinc-950 dark:text-gray-200">
+              <thead className="font-bold uppercase bg-zinc-200 dark:bg-zinc-900 text-gray-800 dark:text-gray-200">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Day
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Meal Type
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Meal Name
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Price
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-zinc-100 dark:bg-zinc-950">
+                {mealPlan.map(({ day, meal_type, meal_name, price }) => (
+                  <tr>
+                    <th scope="row" className="px-6 py-4">
+                      {day}
+                    </th>
+                    <td className="px-6 py-4">{meal_type}</td>
+                    <td className="px-6 py-4">{meal_name || "Can't afford"}</td>
+                    <td className="px-6 py-4">{price || "Can't afford"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="w-full my-4 flex justify-end px-10">
+              <button
+                onClick={saveMealPlan}
+                className="bg-blue-500 border border-zinc-600 hover:scale-105 text-white px-4 py-1 ml-2 rounded hover:bg-black transition-all"
+              >
+                Save Plan
+              </button>
+            </div>
+          </div>
         ) : (
-          <p className="text-gray-800">No meal plan available.</p>
+          <p className="text-gray-400">No meal plan available.</p>
         )}
       </div>
     </div>
   );
 }
-
-export default App;

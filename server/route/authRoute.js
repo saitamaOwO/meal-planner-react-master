@@ -15,6 +15,7 @@ function signUpValidator(req, res, next) {
     if (!age) throw "age is required";
     if (!weight) throw "weight is required";
   } catch (err) {
+    console.error(err);
     return res.status(400).json({ error: true, message: err });
   }
   return next();
