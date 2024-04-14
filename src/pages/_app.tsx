@@ -17,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className="w-full flex justify-center">
       <main className={`relative max-w-[1540px] w-full ${font.className}`}>
         <div className="absolute top-5 right-8 flex">
+        {username &&(
           <Link
             href={"/signin"}
             className="mr-2 flex items-center justify-center gap-x-1 border px-4 py-1.5 border-zinc-700 rounded-lg text-sm hover:bg-zinc-700 transition-all"
@@ -37,13 +38,17 @@ export default function App({ Component, pageProps }: AppProps) {
             </svg>
             {username || "Sign In"}
           </Link>
+        )}
+        {username&&(
           <button
             onClick={signOut}
             className="border px-4 py-1.5 border-zinc-700 rounded-lg text-sm hover:bg-zinc-700 transition-all"
           >
             Sign Out
           </button>
+           )}
         </div>
+       
         <Component {...pageProps} />
       </main>
     </div>
