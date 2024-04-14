@@ -30,5 +30,13 @@ function signInValidator(req, res, next) {
   }
   return next();
 }
+async function redirectToPlan(req, res, next) {
+  // If sign-in is successful, redirect to the plan page
+  if (res.locals.isAuthenticated) {
+    return res.redirect("/plan");
+  }
+  // If sign-in fails, continue to the next middleware
+  return next();
+}
 
 module.exports = router;

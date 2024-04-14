@@ -1,9 +1,11 @@
 import Cookies from "js-cookie";
 import Head from "next/head";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 import { FormEvent } from "react";
 
 export default function Signin() {
+  const router =  useRouter();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     console.log("CLICKED");
     e.preventDefault();
@@ -28,9 +30,13 @@ export default function Signin() {
       });
       const data = await res.json();
       if (data.error) throw { err: data.message };
-      alert(data.message);
+      
+      // Save username and password in cookies upon successful sign-in
       Cookies.set("username", requestBody.username);
       Cookies.set("password", requestBody.password);
+      
+      // Redirect to the plan page after successful sign-in
+      router.push("/plan");
     } catch (error: any) {
       console.error({ error });
       alert(error.err || "Something went wrong");

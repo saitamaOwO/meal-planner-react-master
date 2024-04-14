@@ -49,7 +49,7 @@ async function signIn(req, res) {
     const storedPassword = result.rows[0].password;
     if (password === storedPassword)
       // Passwords match, sign-in successful
-      return res.status(200).json({ error: false, message: "Sign In success" });
+      return res.redirect("/plan");
     // Passwords do not match
     return res.status(400).json({ error: true, message: "Incorrect password" });
   } catch (error) {
