@@ -22,20 +22,14 @@ app.use("/api", async (req, res, next) => {
     `;
     const result = await pool.query(query, [username]);
     if (result.rows.length === 0)
-      return res
-        .status(404)
-        .json({ error: true, message: "Please login again" });
+      return res.status(404).json({ error: true, message: "Please login again" });
     const storedPassword = result.rows[0].password;
     if (password !== storedPassword)
-      return res
-        .status(400)
-        .json({ error: true, message: "Session expired, please login again" });
+      return res.status(400).json({ error: true, message: "Session expired, please login again" });
     return next();
   } catch (error) {
     console.error({ error });
-    return res
-      .status(500)
-      .json({ error: true, message: "Internal server error" });
+    return res.status(500).json({ error: true, message: "Internal server error" });
   }
 });
 app.use("/auth", authRoute);
@@ -43,4 +37,4 @@ app.use("/auth", authRoute);
 app.all("*", (req, res) => {
   res.status(404).json({ error: true, message: "No route found" });
 });
-app.listen(8080, console.log("server running at http://localhost:8080"));
+app.listen(8080, console.log("Server running at http://localhost:8080"));
