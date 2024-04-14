@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION save_plan(username VARCHAR(255), plan_date DATE, total_price NUMERIC, meal_plan_table JSONB)
+RETURNS VOID AS
+$$
+DECLARE
+    plan_id BIGINT;
+    meal_record RECORD;
+    meal_id NUMERIC;
+BEGIN
+    SELECT nextval('plans_plan_id_seq') INTO plan_id;
+    
+    -- Insert into the plans table
+    INSERT INTO plans (plan_id, username, plan_date, total_price)
+    VALUES (plan_id, username, plan_date, total_price);
+    FOR meal_record IN SELECT (jsonb_populate_record(null::meal_plan_type, value)).* FROM jsonb_each(meal_plan_table)
+    LOOP
+        SELECT meal_id INTO meal_id FROM meals WHERE meal_name = meal_record.meal_name;
+        INSERT INTO plan_details (plan_id, meal_id, meal_name, quantity, subtotal, timestamp)
+        VALUES (plan_id, meal_id, meal_record.meal_name, 1, meal_record.price, CURRENT_TIMESTAMP);
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;

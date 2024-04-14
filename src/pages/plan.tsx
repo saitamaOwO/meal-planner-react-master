@@ -36,8 +36,9 @@ export default function Plan() {
       return;
     }
     try {
-      const { data } = await axiosInstance.post(SAVE_PLAN, { mealPlan });
+      const { data } = await axiosInstance.post(SAVE_PLAN, { budget, plan: mealPlan });
       if (data.error) throw { err: data.message };
+      alert(data.message);
     } catch (error: any) {
       console.error(error);
       alert(error.err || "Something went wrong");

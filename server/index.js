@@ -29,6 +29,7 @@ async function authenticate(req, res, next) {
     const storedPassword = result.rows[0].password;
     if (password !== storedPassword)
       return res.status(400).json({ error: true, message: "Session expired, please login again" });
+    req.username = username;
     return next();
   } catch (error) {
     console.error({ error });
