@@ -3,67 +3,73 @@ RETURNS TABLE (day int, meal_type varchar, meal_name varchar, price numeric) AS
 $$
 DECLARE
     remaining_budget numeric := budget;
-    breakfast_name varchar;
-    breakfast_price numeric;
-    lunch_name varchar;
-    lunch_price numeric;
-    dinner_name varchar;
-    dinner_price numeric;
+    day_counter int := 0;
+    meal_name varchar;
+    price numeric;
 BEGIN
-    -- Select breakfast
-    SELECT m_breakfast.meal_name, m_breakfast.price
-    INTO breakfast_name, breakfast_price
-    FROM Meals m_breakfast
-    JOIN Meal_Types mt_breakfast ON m_breakfast.meal_id = mt_breakfast.type_id
-    WHERE mt_breakfast.type_name = 'Breakfast' AND m_breakfast.price <= remaining_budget
-    ORDER BY RANDOM()
-    LIMIT 1;
+    FOR day_counter IN 1..7 LOOP
+        -- Select breakfast
+        SELECT meals.meal_name, meals.price
+        INTO meal_name, price
+        FROM meals
+        JOIN meal_types ON meals.type_id = meal_types.type_id
+        WHERE meal_types.type_name = 'Breakfast' AND meals.price <= remaining_budget
+        ORDER BY RANDOM()
+        LIMIT 1;
 
-    -- If no breakfast can be selected, an exception
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for breakfast.';
-    END IF;
-    
-    -- Update remaining budget after selecting breakfast
-    remaining_budget := remaining_budget - breakfast_price;
+        -- If no breakfast can be selected, an exception
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for breakfast on day %.', day_counter;
+        END IF;
 
-    -- Select lunch
-    SELECT m_lunch.meal_name, m_lunch.price
-    INTO lunch_name, lunch_price
-    FROM Meals m_lunch
-    JOIN Meal_Types mt_lunch ON m_lunch.meal_id = mt_lunch.type_id
-    WHERE mt_lunch.type_name = 'Lunch' AND m_lunch.price <= remaining_budget
-    ORDER BY RANDOM()
-    LIMIT 1;
+        -- Update remaining budget after selecting breakfast
+        remaining_budget := remaining_budget - price;
 
-    -- If no lunch can be selected, an exception
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for lunch.';
-    END IF;
+        -- Return breakfast for the current day
+        RETURN QUERY SELECT day_counter, 'Breakfast'::varchar, meal_name, price;
 
-    -- Update remaining budget after selecting lunch
-    remaining_budget := remaining_budget - lunch_price;
+        -- Select lunch
+        SELECT meals.meal_name, meals.price
+        INTO meal_name, price
+        FROM meals
+        JOIN meal_types ON meals.type_id = meal_types.type_id
+        WHERE meal_types.type_name = 'Lunch' AND meals.price <= remaining_budget
+        ORDER BY RANDOM()
+        LIMIT 1;
 
-    -- Select dinner
-    SELECT m_dinner.meal_name, m_dinner.price
-    INTO dinner_name, dinner_price
-    FROM Meals m_dinner
-    JOIN Meal_Types mt_dinner ON m_dinner.meal_id = mt_dinner.type_id
-    WHERE mt_dinner.type_name = 'Dinner' AND m_dinner.price <= remaining_budget
-    ORDER BY RANDOM()
-    LIMIT 1;
+        -- If no lunch can be selected, an exception
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for lunch on day %.', day_counter;
+        END IF;
 
-    -- If no dinner can be selected,an exception
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for dinner.';
-    END IF;
+        -- Update remaining budget after selecting lunch
+        remaining_budget := remaining_budget - price;
 
-    -- Return meal plan
-    RETURN QUERY
-    SELECT 1 AS day, 'Breakfast'::varchar AS meal_type, breakfast_name::varchar, breakfast_price::numeric
-    UNION ALL
-    SELECT 1 AS day, 'Lunch'::varchar AS meal_type, lunch_name::varchar, lunch_price::numeric
-    UNION ALL
-    SELECT 1 AS day, 'Dinner'::varchar AS meal_type, dinner_name::varchar, dinner_price::numeric;
+        -- Return lunch for the current day
+        RETURN QUERY SELECT day_counter, 'Lunch'::varchar, meal_name, price;
+
+        -- Select dinner
+        SELECT meals.meal_name, meals.price
+        INTO meal_name, price
+        FROM meals
+        JOIN meal_types ON meals.type_id = meal_types.type_id
+        WHERE meal_types.type_name = 'Dinner' AND meals.price <= remaining_budget
+        ORDER BY RANDOM()
+        LIMIT 1;
+
+        -- If no dinner can be selected, an exception
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for dinner on day %.', day_counter;
+        END IF;
+
+        -- Update remaining budget after selecting dinner
+        remaining_budget := remaining_budget - price;
+
+        -- Return dinner for the current day
+        RETURN QUERY SELECT day_counter, 'Dinner'::varchar, meal_name, price;
+    END LOOP;
+
+    -- If the loop completes without raising an exception, return the completed meal plan
+    RETURN;
 END;
 $$ LANGUAGE plpgsql;
