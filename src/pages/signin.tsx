@@ -1,11 +1,14 @@
+import { SIGN_IN } from "@/util/api";
+import axiosInstance from "@/util/axios";
+import setSession from "@/util/session";
 import Cookies from "js-cookie";
 import Head from "next/head";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
 export default function Signin() {
-  const router =  useRouter();
+  const router = useRouter();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     console.log("CLICKED");
     e.preventDefault();
@@ -21,21 +24,9 @@ export default function Signin() {
   }
   async function signIn(requestBody: { username: string; password: string }) {
     try {
-      const res = await fetch("http://localhost:8080/auth/signIn", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await res.json();
+      const { data } = await axiosInstance.post(SIGN_IN, requestBody);
       if (data.error) throw { err: data.message };
-      
-      // Save username and password in cookies upon successful sign-in
-      Cookies.set("username", requestBody.username);
-      Cookies.set("password", requestBody.password);
-      
-      // Redirect to the plan page after successful sign-in
+      setSession(requestBody.username, requestBody.password);
       router.push("/plan");
     } catch (error: any) {
       console.error({ error });
@@ -105,10 +96,7 @@ export default function Signin() {
                       />
                     </div>
                     <div className="ml-3 text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-gray-500 dark:text-gray-300"
-                      >
+                      <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">
                         Remember me
                       </label>
                     </div>

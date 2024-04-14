@@ -6,7 +6,7 @@ const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${Cookies.get("authToken")}`,
+    Authorization: `Bearer ${Cookies.get("username")} ${Cookies.get("password")}`,
   },
 });
 

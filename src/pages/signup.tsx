@@ -1,3 +1,5 @@
+import { SIGN_UP } from "@/util/api";
+import axiosInstance from "@/util/axios";
 import Head from "next/head";
 import Link from "next/link";
 import { FormEvent } from "react";
@@ -35,14 +37,7 @@ export default function Signup() {
     weight: string;
   }) {
     try {
-      const res = await fetch("http://localhost:8080/auth/signUp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await res.json();
+      const { data } = await axiosInstance.post(SIGN_UP, requestBody);
       if (data.error) throw { err: data.message };
       alert(data.message);
     } catch (error: any) {
@@ -192,10 +187,7 @@ export default function Signup() {
                     />
                   </div>
                   <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="terms"
-                      className="font-light text-gray-500 dark:text-gray-300"
-                    >
+                    <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">
                       I accept the{" "}
                       <a
                         className="font-medium text-primary-600 hover:underline dark:text-primary-500"

@@ -12,6 +12,7 @@ app.use("/", (req, res, next) => {
 });
 
 const authRoute = require("./route/authRoute");
+const { error } = require("console");
 
 app.use("/api", async (req, res, next) => {
   const { username, password } = req.body;
@@ -34,6 +35,9 @@ app.use("/api", async (req, res, next) => {
 });
 app.use("/auth", authRoute);
 
+app.all("/", (req, res) =>
+  res.status(200).json({ error: false, message: "Backend working properly" })
+);
 app.all("*", (req, res) => {
   res.status(404).json({ error: true, message: "No route found" });
 });

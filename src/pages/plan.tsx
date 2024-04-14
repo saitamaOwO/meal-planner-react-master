@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
+import axiosInstance from "@/util/axios";
 
 interface MealPlan {
   day: number;
@@ -9,10 +10,10 @@ interface MealPlan {
 }
 
 function App() {
-  const [budget, setBudget] = useState('');
+  const [budget, setBudget] = useState("");
   const [mealPlan, setMealPlan] = useState<MealPlan[]>([]); // Explicitly type mealPlan
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleBudgetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setBudget(event.target.value);
@@ -21,12 +22,12 @@ function App() {
   const handleGetMealPlan = async () => {
     try {
       setLoading(true);
-      setError('');
-      const response = await axios.post<MealPlan[]>('/api', { budget }); // Specify the response data type
+      setError("");
+      const response = await axiosInstance.post("/api", { budget }); // Specify the response data type
       setMealPlan(response.data);
     } catch (error) {
-      console.error('Error fetching meal plan:', error);
-      setError('Failed to fetch meal plan. Please try again.');
+      console.error("Error fetching meal plan:", error);
+      setError("Failed to fetch meal plan. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -36,7 +37,9 @@ function App() {
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-4">Meal Planner</h1>
       <div className="mb-4">
-        <label htmlFor="budget" className="mr-2">Enter Budget:</label>
+        <label htmlFor="budget" className="mr-2">
+          Enter Budget:
+        </label>
         <input
           type="number"
           id="budget"
@@ -44,8 +47,11 @@ function App() {
           onChange={handleBudgetChange}
           className="border border-gray-300 rounded px-2 py-1 text-black"
         />
-        <button onClick={handleGetMealPlan} className="bg-blue-500 text-white px-4 py-1 ml-2 rounded hover:bg-blue-600">
-          {loading ? 'Loading...' : 'Get Meal Plan'}
+        <button
+          onClick={handleGetMealPlan}
+          className="bg-blue-500 text-white px-4 py-1 ml-2 rounded hover:bg-blue-600"
+        >
+          {loading ? "Loading..." : "Get Meal Plan"}
         </button>
       </div>
       <div>

@@ -11,9 +11,7 @@ async function signUp(req, res) {
     const userExistsResult = await pool.query(userExistsQuery, [username]);
 
     if (userExistsResult.rows.length > 0) {
-      return res
-        .status(400)
-        .json({ error: true, message: "Username already exists" });
+      return res.status(400).json({ error: true, message: "Username already exists" });
     }
 
     // If the username doesn't exist, proceed with the sign-up process
@@ -24,9 +22,7 @@ async function signUp(req, res) {
     const values = [username, name, email, password, height, age, weight];
     await pool.query(insertQuery, values);
 
-    return res
-      .status(200)
-      .json({ error: false, message: `${name} has been saved` });
+    return res.status(200).json({ error: false, message: `${name} has been saved` });
   } catch (error) {
     console.error({ error });
     return res.status(500).json({ error: true, message: error.message });
@@ -49,14 +45,13 @@ async function signIn(req, res) {
     const storedPassword = result.rows[0].password;
     if (password === storedPassword)
       // Passwords match, sign-in successful
-      return res.redirect("/plan");
+      return res.status(200).json({ error: false, message: "Sign In success" });
+
     // Passwords do not match
     return res.status(400).json({ error: true, message: "Incorrect password" });
   } catch (error) {
     console.error({ error });
-    return res
-      .status(500)
-      .json({ error: true, message: "Internal server error" });
+    return res.status(500).json({ error: true, message: "Internal server error" });
   }
 }
 
