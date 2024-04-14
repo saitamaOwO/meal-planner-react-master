@@ -1,0 +1,69 @@
+CREATE OR REPLACE FUNCTION generate_meal_plan(budget numeric)
+RETURNS TABLE (day int, meal_type varchar, meal_name varchar, price numeric) AS
+$$
+DECLARE
+    remaining_budget numeric := budget;
+    breakfast_name varchar;
+    breakfast_price numeric;
+    lunch_name varchar;
+    lunch_price numeric;
+    dinner_name varchar;
+    dinner_price numeric;
+BEGIN
+    -- Select breakfast
+    SELECT m_breakfast.meal_name, m_breakfast.price
+    INTO breakfast_name, breakfast_price
+    FROM Meals m_breakfast
+    JOIN Meal_Types mt_breakfast ON m_breakfast.meal_id = mt_breakfast.type_id
+    WHERE mt_breakfast.type_name = 'Breakfast' AND m_breakfast.price <= remaining_budget
+    ORDER BY RANDOM()
+    LIMIT 1;
+
+    -- If no breakfast can be selected, an exception
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for breakfast.';
+    END IF;
+    
+    -- Update remaining budget after selecting breakfast
+    remaining_budget := remaining_budget - breakfast_price;
+
+    -- Select lunch
+    SELECT m_lunch.meal_name, m_lunch.price
+    INTO lunch_name, lunch_price
+    FROM Meals m_lunch
+    JOIN Meal_Types mt_lunch ON m_lunch.meal_id = mt_lunch.type_id
+    WHERE mt_lunch.type_name = 'Lunch' AND m_lunch.price <= remaining_budget
+    ORDER BY RANDOM()
+    LIMIT 1;
+
+    -- If no lunch can be selected, an exception
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for lunch.';
+    END IF;
+
+    -- Update remaining budget after selecting lunch
+    remaining_budget := remaining_budget - lunch_price;
+
+    -- Select dinner
+    SELECT m_dinner.meal_name, m_dinner.price
+    INTO dinner_name, dinner_price
+    FROM Meals m_dinner
+    JOIN Meal_Types mt_dinner ON m_dinner.meal_id = mt_dinner.type_id
+    WHERE mt_dinner.type_name = 'Dinner' AND m_dinner.price <= remaining_budget
+    ORDER BY RANDOM()
+    LIMIT 1;
+
+    -- If no dinner can be selected,an exception
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for dinner.';
+    END IF;
+
+    -- Return meal plan
+    RETURN QUERY
+    SELECT 1 AS day, 'Breakfast'::varchar AS meal_type, breakfast_name::varchar, breakfast_price::numeric
+    UNION ALL
+    SELECT 1 AS day, 'Lunch'::varchar AS meal_type, lunch_name::varchar, lunch_price::numeric
+    UNION ALL
+    SELECT 1 AS day, 'Dinner'::varchar AS meal_type, dinner_name::varchar, dinner_price::numeric;
+END;
+$$ LANGUAGE plpgsql;
