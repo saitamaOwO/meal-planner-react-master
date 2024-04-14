@@ -24,10 +24,17 @@ async function savePlan(req, res) {
   const { plan, budget } = req.body;
 
   try {
-    plan.forEach(async ({ day, meal_type, meal_name, price }) => {
-      const query = `INSERT INTO all_plan_details (username, day, meal_type, meal_name, price, budget) VALUES ($1, $2, $3, $4, $5, $6)`;
+    // Iterate over each meal in the plan
+    for (const meal of plan) {
+      const { day, meal_type, meal_name, price } = meal;
+      
+      // Insert the meal into the all_plan_details table
+      const query = `
+        INSERT INTO all_plan_details (username, day, meal_type, meal_name, price, budget) 
+        VALUES ($1, $2, $3, $4, $5, $6)
+      `;
       await pool.query(query, [username, day, meal_type, meal_name, price, budget]);
-    });
+    }
 
     return res.status(200).json({ error: false, message: "Plan saved" });
   } catch (error) {
@@ -35,5 +42,6 @@ async function savePlan(req, res) {
     return res.status(500).json({ error: true, message: "Internal server error" });
   }
 }
+
 
 module.exports = { mealPlan, savePlan };

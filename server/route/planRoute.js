@@ -35,9 +35,3 @@ function savePlanValidator(req, res, next) {
 }
 
 module.exports = router;
-
-plan = [
-  { day: 1, meal_type: "breakfast", meal_name: "sandwicch", price: "2" },
-  { day: 1, meal_type: "lunch", meal_name: "burger", price: "212" },
-  { day: 1, meal_type: "dinner", meal_name: "pizza", price: "4" },
-];
