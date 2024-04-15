@@ -67,3 +67,85 @@ BEGIN
     SELECT 1 AS day, 'Dinner'::varchar AS meal_type, dinner_name::varchar, dinner_price::numeric;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+///////
+--New procedure for calories
+
+CREATE OR REPLACE FUNCTION generates_plans(budget numeric)
+RETURNS TABLE (day int, meal_type varchar, meal_name varchar, price numeric, calories int, total_calories int) AS
+$$
+DECLARE
+    remaining_budget numeric := budget;
+    day_counter int := 0;
+BEGIN
+    FOR day_counter IN 1..7 LOOP
+        total_calories := 0;
+        SELECT day_counter, 'Breakfast', breakfast.meal_name, breakfast.price, breakfast.calories, total_calories
+        INTO day, meal_type, meal_name, price, calories, total_calories
+        FROM (
+            SELECT meals.meal_name, meals.price, meals.calories
+            FROM meals
+            JOIN meal_types ON meals.type_id = meal_types.type_id
+            WHERE meal_types.type_name = 'Breakfast' AND meals.price <= remaining_budget
+            ORDER BY RANDOM()
+            LIMIT 1
+        ) AS breakfast;
+        
+        -- If no breakfast can be selected,exception
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for breakfast on day %.', day_counter;
+        END IF;
+        
+        -- Update budget and t_c
+        remaining_budget := remaining_budget - price;
+        total_calories := total_calories + calories;
+        RETURN NEXT;
+        
+        SELECT day_counter, 'Lunch', lunch.meal_name, lunch.price, lunch.calories, total_calories
+        INTO day, meal_type, meal_name, price, calories, total_calories
+        FROM (
+            SELECT meals.meal_name, meals.price, meals.calories
+            FROM meals
+            JOIN meal_types ON meals.type_id = meal_types.type_id
+            WHERE meal_types.type_name = 'Lunch' AND meals.price <= remaining_budget
+            ORDER BY RANDOM()
+            LIMIT 1
+        ) AS lunch;
+        
+        -- If no lunch can be selected,exception
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for lunch on day %.', day_counter;
+        END IF;
+        
+        -- Update budget and tc
+        remaining_budget := remaining_budget - price;
+        total_calories := total_calories + calories;
+        RETURN NEXT;
+        
+        SELECT day_counter, 'Dinner', dinner.meal_name, dinner.price, dinner.calories, total_calories
+        INTO day, meal_type, meal_name, price, calories, total_calories
+        FROM (
+            SELECT meals.meal_name, meals.price, meals.calories
+            FROM meals
+            JOIN meal_types ON meals.type_id = meal_types.type_id
+            WHERE meal_types.type_name = 'Dinner' AND meals.price <= remaining_budget
+            ORDER BY RANDOM()
+            LIMIT 1
+        ) AS dinner;
+        
+        -- If no dinner can be selected,exception
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for dinner on day %.', day_counter;
+        END IF;
+        
+        -- Update budget and tc
+        remaining_budget := remaining_budget - price;
+        total_calories := total_calories + calories;
+        RETURN NEXT;
+    END LOOP;
+    RETURN;
+END;
+$$ LANGUAGE plpgsql;
+
