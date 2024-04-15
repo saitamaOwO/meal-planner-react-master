@@ -36,15 +36,12 @@ BEGIN
     ORDER BY RANDOM()
     LIMIT 1;
 
-    -- If no lunch can be selected, an exception
+    -- If no lunch can be selected, exception
     IF NOT FOUND THEN
         RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for lunch.';
     END IF;
-
-    -- Update remaining budget after selecting lunch
     remaining_budget := remaining_budget - lunch_price;
 
-    -- Select dinner
     SELECT m_dinner.meal_name, m_dinner.price
     INTO dinner_name, dinner_price
     FROM Meals m_dinner
@@ -53,12 +50,10 @@ BEGIN
     ORDER BY RANDOM()
     LIMIT 1;
 
-    -- If no dinner can be selected,an exception
+    -- If no dinner can be selected, exception
     IF NOT FOUND THEN
         RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for dinner.';
     END IF;
-
-    -- Return meal plan
     RETURN QUERY
     SELECT 1 AS day, 'Breakfast'::varchar AS meal_type, breakfast_name::varchar, breakfast_price::numeric
     UNION ALL
@@ -93,14 +88,14 @@ BEGIN
             LIMIT 1
         ) AS breakfast;
         
-        -- If no breakfast can be selected,exception
+        -- If no breakfast can be selected, exception
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for breakfast on day %.', day_counter;
         END IF;
         
-        -- Update budget and t_c
         remaining_budget := remaining_budget - price;
         total_calories := total_calories + calories;
+        
         RETURN NEXT;
         
         SELECT day_counter, 'Lunch', lunch.meal_name, lunch.price, lunch.calories, total_calories
@@ -114,14 +109,13 @@ BEGIN
             LIMIT 1
         ) AS lunch;
         
-        -- If no lunch can be selected,exception
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for lunch on day %.', day_counter;
         END IF;
         
-        -- Update budget and tc
         remaining_budget := remaining_budget - price;
         total_calories := total_calories + calories;
+        
         RETURN NEXT;
         
         SELECT day_counter, 'Dinner', dinner.meal_name, dinner.price, dinner.calories, total_calories
@@ -135,17 +129,16 @@ BEGIN
             LIMIT 1
         ) AS dinner;
         
-        -- If no dinner can be selected,exception
+        -- If no dinner can be selected, an exception
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No meal plan can be created. Insufficient budget for dinner on day %.', day_counter;
         END IF;
         
-        -- Update budget and tc
         remaining_budget := remaining_budget - price;
         total_calories := total_calories + calories;
         RETURN NEXT;
     END LOOP;
+
     RETURN;
 END;
 $$ LANGUAGE plpgsql;
-
