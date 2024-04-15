@@ -1,0 +1,626 @@
+alter table meals add type_id numeric;
+delete from meal_ingredients;
+delete from meal_reviews;
+delete from meal_diets;
+delete from meals;
+
+--Insertion 0
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Classic French toast with powdered sugar', 7.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad', 'Crisp romaine lettuce with Caesar dressing', 9.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Chicken Alfredo', 'Creamy pasta with grilled chicken', 14.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner')),
+    ('Brownie', 'Rich chocolate brownie with vanilla ice cream', 6.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dessert')),
+    ('Iced Coffee', 'Refreshing iced coffee with milk and sugar', 4.99, 150, (SELECT type_id FROM meal_types WHERE type_name = 'Beverage'));
+-- Insertion 1
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Waffles', 'Crispy waffles with syrup', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Salad', 'Classic salad with grilled chicken', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Steak Frites', 'Juicy steak with crispy fries', 19.99, 700, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 2
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Omelette', 'Fluffy omelette with cheese and vegetables', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Salad', 'Fresh salad with tomatoes, mozzarella, and basil', 8.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('BBQ Ribs', 'Tender ribs smothered in barbecue sauce', 18.99, 800, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 3
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito', 'Hearty burrito filled with eggs, bacon, and veggies', 11.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Salad', 'Refreshing salad with cucumbers, olives, and feta cheese', 9.99, 200, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi', 'Garlic-infused shrimp served over pasta', 17.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 4
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel with Lox', 'Classic bagel topped with smoked salmon and cream cheese', 12.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Quinoa Salad', 'Healthy salad with quinoa, vegetables, and vinaigrette', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Lasagna', 'Layered lasagna with spinach, mushrooms, and cheese', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 5
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Sandwich', 'Savory sandwich with eggs, bacon, and cheese', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Cobb Salad', 'Classic salad with avocado, bacon, and blue cheese', 11.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Stir Fry', 'Tender beef and mixed vegetables in a flavorful sauce', 15.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 6
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Traditional French toast served with powdered sugar', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad', 'Classic salad with romaine lettuce, croutons, and Caesar dressing', 9.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Wellington', 'Tender beef fillet wrapped in puff pastry', 24.99, 700, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 7
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Eggs Benedict', 'Poached eggs served on English muffins with ham and hollandaise sauce', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Nicoise Salad', 'Salad with tuna, boiled eggs, olives, and green beans', 12.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Lamb Chops', 'Juicy lamb chops seasoned and grilled to perfection', 22.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 8
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Belgian Waffles', 'Light and fluffy waffles served with whipped cream and berries', 11.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Cobb Salad', 'Classic salad with chicken, avocado, bacon, and blue cheese', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Lobster Tail', 'Butter-poached lobster tail served with drawn butter', 29.99, 800, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 9
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bowl', 'Healthy breakfast bowl with Greek yogurt, fruit, and granola', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Wrap', 'Wrap filled with grilled chicken, romaine lettuce, and Caesar dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Filet Mignon', 'Tender filet mignon cooked to perfection', 27.99, 650, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 10
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Avocado Toast', 'Toast topped with mashed avocado, cherry tomatoes, and feta cheese', 7.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Salad', 'Salad with mixed greens, olives, cucumbers, and feta cheese', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Seafood Paella', 'Traditional Spanish dish with rice, shrimp, mussels, and chorizo', 25.99, 700, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 11
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Omelette', 'Fluffy omelette with cheese, mushrooms, and spinach', 8.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Salad', 'Salad with tomatoes, fresh mozzarella, basil, and balsamic glaze', 10.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Stroganoff', 'Tender beef cooked with mushrooms and served over egg noodles', 14.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 12
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel with Lox', 'Toasted bagel with cream cheese, smoked salmon, and red onions', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Salad', 'Salad with cucumbers, tomatoes, olives, and feta cheese', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Tacos', 'Tacos filled with seasoned ground beef, lettuce, and cheese', 12.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 13
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito', 'Burrito filled with scrambled eggs, bacon, and potatoes', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Wrap', 'Wrap filled with grilled chicken, romaine lettuce, and Caesar dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetarian Stir-Fry', 'Stir-fried vegetables served over rice noodles', 13.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 14
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Belgian Waffle', 'Traditional Belgian waffle with syrup and powdered sugar', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Quinoa Salad', 'Salad with quinoa, mixed greens, vegetables, and lemon vinaigrette', 11.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi', 'Shrimp cooked in garlic butter sauce and served over pasta', 16.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 15
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Sandwich', 'Sandwich with eggs, cheese, and bacon on an English muffin', 9.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Cobb Wrap', 'Wrap filled with grilled chicken, avocado, bacon, and blue cheese', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon Fillet', 'Grilled salmon fillet seasoned with herbs and lemon', 18.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 16
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Thick slices of bread dipped in egg batter and grilled', 7.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Wrap', 'Wrap filled with hummus, roasted vegetables, and feta cheese', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Chicken Alfredo', 'Creamy Alfredo sauce with grilled chicken over pasta', 14.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 17
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Avocado Toast', 'Sliced avocado on toasted bread with seasonings', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Thai Salad', 'Salad with mixed greens, peanuts, and Thai peanut dressing', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Curry', 'Curried vegetables served with rice', 12.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 18
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Eggs Benedict', 'Poached eggs on English muffins with hollandaise sauce', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Wrap', 'Wrap filled with gyro meat, tzatziki sauce, and vegetables', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Stir Fry', 'Stir-fried beef with vegetables served over rice', 13.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 19
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Fruit Bowl', 'Assorted fresh fruit served in a bowl', 6.99, 200, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad', 'Classic Caesar salad with romaine lettuce and croutons', 8.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Lasagna', 'Lasagna made with layers of vegetables and cheese', 12.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 20
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bowl', 'Bowl with scrambled eggs, potatoes, and sausage', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Tuna Salad Sandwich', 'Sandwich with tuna salad on whole wheat bread', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Pork Chop', 'Grilled pork chop served with mashed potatoes and vegetables', 15.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 21
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Omelette', 'Fluffy omelette filled with cheese, ham, and vegetables', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Sandwich', 'Sandwich with fresh mozzarella, tomatoes, and basil', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Burrito', 'Burrito filled with seasoned beef, beans, rice, and cheese', 10.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 22
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel with Lox', 'Toasted bagel with cream cheese and smoked salmon', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mushroom Risotto', 'Creamy risotto with mushrooms and parmesan cheese', 12.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi', 'Shrimp sautéed in garlic and butter sauce served over pasta', 15.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 23
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Yogurt Parfait', 'Layered yogurt with granola and fresh fruit', 6.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Quinoa Salad', 'Salad with quinoa, vegetables, and balsamic vinaigrette', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetarian Chili', 'Hearty chili made with beans and vegetables', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 24
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito', 'Burrito filled with scrambled eggs, bacon, and potatoes', 9.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Salad', 'Salad with grilled chicken, romaine lettuce, and Caesar dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Tacos', 'Tacos filled with seasoned beef, lettuce, cheese, and salsa', 12.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 25
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Waffles', 'Golden waffles served with syrup and butter', 7.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Salad', 'Salad with tomatoes, fresh mozzarella, and basil', 8.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon Fillet', 'Grilled salmon fillet with lemon and herbs', 16.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 26
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Fruit Smoothie', 'Refreshing smoothie with assorted fruits and yogurt', 6.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Wrap', 'Wrap filled with grilled chicken, romaine lettuce, and Caesar dressing', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Stir Fry', 'Stir-fried vegetables with tofu or chicken, served with rice', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 27
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Classic French toast topped with powdered sugar and maple syrup', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Salad', 'Salad with mixed greens, tomatoes, cucumbers, olives, and feta cheese', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Stroganoff', 'Creamy beef stew served over egg noodles', 13.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 28
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bowl', 'Bowl with scrambled eggs, bacon, avocado, and potatoes', 9.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Wrap', 'Wrap filled with grilled chicken, romaine lettuce, and Caesar dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon Teriyaki', 'Grilled salmon glazed with teriyaki sauce, served with rice', 15.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 29
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Avocado Toast', 'Toasted bread topped with mashed avocado, cherry tomatoes, and feta cheese', 7.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Wrap', 'Wrap filled with hummus, tabbouleh, cucumbers, and olives', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Pork Tenderloin', 'Grilled pork tenderloin with apple chutney, served with mashed potatoes', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 30
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Frittata', 'Italian-style omelette with assorted vegetables and cheese', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Panini', 'Panini sandwich with fresh mozzarella, tomatoes, and basil pesto', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Lasagna', 'Layered lasagna with ricotta cheese, marinara sauce, and assorted vegetables', 12.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 31
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Egg Muffins', 'Individual baked muffins with eggs, spinach, and cheese', 6.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Salad', 'Classic salad with grilled chicken, romaine lettuce, croutons, and Caesar dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Chili', 'Hearty chili made with ground beef, beans, and tomatoes, served with cornbread', 12.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 32
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel with Lox', 'Toasted bagel topped with cream cheese, smoked salmon, red onion, and capers', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Vegetarian Buddha Bowl', 'Nourishing bowl with quinoa, roasted vegetables, avocado, and tahini dressing', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi', 'Sautéed shrimp in garlic butter sauce, served over pasta', 14.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 33
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Blueberry Pancakes', 'Fluffy pancakes filled with fresh blueberries, served with maple syrup', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Quinoa Salad', 'Wholesome salad with quinoa, mixed greens, cherry tomatoes, and balsamic vinaigrette', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef and Broccoli Stir Fry', 'Stir-fried beef and broccoli in a savory sauce, served with rice', 13.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 34
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Omelette', 'Fluffy omelette with choice of fillings such as cheese, ham, and vegetables', 7.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Shawarma Wrap', 'Wrap filled with grilled chicken, lettuce, tomato, and tzatziki sauce', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Curry', 'Spicy vegetable curry with coconut milk, served with naan bread', 12.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 35
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito', 'Burrito filled with scrambled eggs, bacon, cheese, and salsa', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad with Grilled Chicken', 'Classic Caesar salad topped with grilled chicken breast', 10.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Tacos', 'Tacos filled with seasoned ground beef, lettuce, cheese, and salsa', 12.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 36
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Yogurt Parfait', 'Layered parfait with yogurt, granola, and fresh fruit', 6.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Salad', 'Fresh salad with mixed greens, olives, cucumbers, and feta cheese', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Pasta Primavera', 'Pasta dish with mixed vegetables in a light cream sauce', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 37
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Waffles', 'Golden waffles served with butter and maple syrup', 7.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Salad', 'Italian salad with fresh tomatoes, mozzarella cheese, and basil', 8.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetarian Chili', 'Hearty chili made with beans, vegetables, and spices', 10.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 38
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Eggs Benedict', 'Poached eggs on English muffins with ham and hollandaise sauce', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Cobb Salad', 'Classic salad with mixed greens, avocado, bacon, eggs, and blue cheese', 11.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon Pasta', 'Pasta dish with smoked salmon, spinach, and cream sauce', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 39
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Quesadilla', 'Quesadilla filled with scrambled eggs, cheese, and vegetables', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Tofu Poke Bowl', 'Bowl with marinated tofu, rice, avocado, and assorted toppings', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef and Mushroom Risotto', 'Creamy risotto with tender beef and mushrooms', 12.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 40
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel Sandwich', 'Bagel filled with cream cheese, smoked salmon, and cucumber', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Gyro Wrap', 'Wrap filled with gyro meat, lettuce, tomato, and tzatziki sauce', 11.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Bourguignon', 'Classic French beef stew with red wine and mushrooms', 15.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 41
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Sliced bread dipped in egg batter, grilled, and served with syrup', 7.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Asian Chicken Salad', 'Salad with mixed greens, grilled chicken, mandarin oranges, and sesame dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Lasagna', 'Lasagna made with layers of vegetables, cheese, and marinara sauce', 13.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 42
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Belgian Waffles', 'Light and crispy waffles served with whipped cream and berries', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Thai Peanut Noodles', 'Noodles tossed in spicy peanut sauce with vegetables and tofu', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon Teriyaki', 'Grilled salmon glazed with teriyaki sauce, served with rice and vegetables', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 43
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Omelette with Spinach and Feta', 'Omelette filled with spinach, feta cheese, and tomatoes', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mushroom Risotto', 'Creamy risotto with sautéed mushrooms and Parmesan cheese', 12.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Honey Garlic Chicken', 'Chicken thighs cooked in a sweet and savory honey garlic sauce', 13.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 44
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Sandwich', 'Sandwich with eggs, bacon, cheese, and avocado on toasted bread', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Wrap', 'Wrap filled with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Stroganoff', 'Russian dish with beef, mushrooms, and onions in a creamy sauce, served over noodles', 15.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 45
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Hash', 'Hash browns with diced ham, onions, and bell peppers, topped with eggs', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Salad', 'Salad with cucumbers, tomatoes, olives, onions, and feta cheese, dressed with olive oil and vinegar', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Chicken Alfredo Pasta', 'Pasta dish with grilled chicken and creamy Alfredo sauce', 13.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 46
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Avocado Toast', 'Sliced bread topped with mashed avocado, cherry tomatoes, and a sprinkle of salt and pepper', 7.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Wrap', 'Wrap filled with hummus, roasted vegetables, olives, and feta cheese', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Tenders', 'Tender beef strips marinated in herbs and spices, served with mashed potatoes and gravy', 14.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 47
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito Bowl', 'Bowl with scrambled eggs, black beans, avocado, salsa, and cheese', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad Wrap', 'Wrap filled with romaine lettuce, grilled chicken, Parmesan cheese, and Caesar dressing', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Curry', 'Indian-style curry with mixed vegetables and aromatic spices, served with rice', 12.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 48
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Parfait', 'Layered parfait with Greek yogurt, granola, and mixed berries', 7.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Salad', 'Salad with fresh tomatoes, mozzarella cheese, basil leaves, and balsamic glaze', 8.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Pork Schnitzel', 'Breaded and fried pork cutlet, served with mashed potatoes and sauerkraut', 14.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 49
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Smoothie Bowl', 'Smoothie bowl topped with granola, banana slices, and chia seeds', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Quinoa Salad', 'Salad with quinoa, mixed greens, roasted vegetables, and lemon vinaigrette', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Tacos', 'Tacos filled with seasoned ground beef, lettuce, cheese, and salsa', 12.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 50
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Croissant', 'Croissant filled with scrambled eggs, ham, and cheese', 7.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Nicoise Salad', 'Salad with tuna, hard-boiled eggs, green beans, potatoes, and olives', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Paella', 'Spanish rice dish with mixed vegetables, saffron, and spices', 13.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 51
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Muffin', 'English muffin filled with egg, cheese, and Canadian bacon', 6.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Tofu Salad', 'Salad with marinated tofu, mixed greens, and sesame ginger dressing', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Steak Frites', 'Grilled steak served with French fries and garlic butter', 16.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 52
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bagel', 'Bagel filled with scrambled eggs, bacon, and cheddar cheese', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad', 'Salad with romaine lettuce, croutons, Parmesan cheese, and Caesar dressing', 7.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Chicken Tikka Masala', 'Indian curry dish with chicken in a creamy tomato sauce, served with rice', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 53
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito', 'Burrito filled with scrambled eggs, sausage, peppers, onions, and cheese', 9.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Panini', 'Panini with fresh mozzarella, tomatoes, basil pesto, and balsamic glaze', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon En Papillote', 'Salmon fillet baked in parchment paper with herbs and vegetables', 16.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 54
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bowl', 'Bowl with scrambled eggs, potatoes, sausage, and cheese', 8.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Cobb Salad', 'Salad with mixed greens, grilled chicken, bacon, avocado, eggs, and blue cheese', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Bourguignon', 'French beef stew cooked with red wine, mushrooms, and onions', 18.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 55
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel with Lox', 'Bagel with cream cheese, smoked salmon, capers, and red onions', 9.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Nicoise Panzanella', 'Panzanella salad with tuna, tomatoes, cucumbers, olives, and croutons', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi', 'Shrimp sautéed in garlic butter and white wine, served over pasta', 17.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 56
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Thick slices of bread dipped in egg batter and cooked until golden brown', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Salad', 'Salad with lettuce, tomatoes, cucumbers, olives, feta cheese, and Greek dressing', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Stroganoff', 'Russian dish with beef strips, mushrooms, and sour cream sauce, served over noodles', 15.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 57
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito Bowl', 'Bowl with scrambled eggs, black beans, avocado, salsa, and cheese', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Salad', 'Salad with grilled chicken, romaine lettuce, croutons, Parmesan cheese, and Caesar dressing', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Stir Fry', 'Stir-fried vegetables with tofu or chicken in a savory sauce, served over rice', 12.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 58
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Omelette', 'Fluffy omelette filled with cheese, mushrooms, spinach, and tomatoes', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Cobb Sandwich', 'Sandwich with grilled chicken, bacon, avocado, lettuce, tomato, and mayo on toasted bread', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Fish and Chips', 'Deep-fried fish fillets served with crispy fries and tartar sauce', 14.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 59
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Quesadilla', 'Quesadilla filled with scrambled eggs, cheese, bacon, and salsa', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Wrap', 'Wrap with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetarian Lasagna', 'Lasagna made with layers of pasta, marinara sauce, vegetables, and cheese', 12.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 60
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Biscuits and Gravy', 'Biscuits topped with creamy sausage gravy', 7.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Salad', 'Salad with mixed greens, olives, tomatoes, cucumbers, feta cheese, and balsamic vinaigrette', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Wellington', 'Tender beef fillet wrapped in puff pastry, served with mushroom duxelles and red wine sauce', 18.99, 700, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 61
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Belgian Waffles', 'Light and fluffy waffles topped with whipped cream and fresh berries', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Tuna Salad Sandwich', 'Sandwich with tuna salad, lettuce, tomato, and mayo on whole grain bread', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Pasta Primavera', 'Pasta dish with mixed vegetables in a light cream sauce', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 62
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast BLT', 'Classic BLT sandwich with bacon, lettuce, tomato, and mayo on toasted bread', 8.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Thai Salad', 'Salad with mixed greens, grilled chicken, peanuts, carrots, and Thai peanut dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon Teriyaki', 'Grilled salmon glazed with teriyaki sauce, served with steamed rice and vegetables', 16.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 63
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Eggs Benedict', 'Poached eggs on English muffins with Canadian bacon and hollandaise sauce', 10.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Panini', 'Panini with mozzarella, tomatoes, basil, and balsamic glaze', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Chicken Parmesan', 'Breaded chicken breast topped with marinara sauce and melted cheese, served with spaghetti', 14.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 64
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito', 'Burrito with scrambled eggs, sausage, cheese, and salsa wrapped in a tortilla', 9.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mushroom Risotto', 'Creamy risotto with mushrooms, onions, garlic, and Parmesan cheese', 12.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('BBQ Ribs', 'Slow-cooked ribs smothered in barbecue sauce, served with coleslaw and cornbread', 17.99, 700, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 65
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bagel Sandwich', 'Bagel sandwich with scrambled eggs, bacon, cheese, and avocado', 8.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Asian Noodle Salad', 'Salad with noodles, shredded chicken, vegetables, and sesame ginger dressing', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Tacos', 'Tacos with seasoned ground beef, lettuce, cheese, salsa, and sour cream', 13.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 66
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Oatmeal', 'Warm oatmeal served with your choice of toppings such as fruits, nuts, and honey', 7.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Salad', 'Salad with fresh mozzarella, tomatoes, basil, olive oil, and balsamic glaze', 9.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Burgundy', 'Beef stew cooked with red wine, mushrooms, onions, and carrots', 16.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 67
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Parfait', 'Layered parfait with yogurt, granola, and mixed berries', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Wrap', 'Wrap with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi', 'Shrimp sautéed in garlic butter sauce, served over pasta', 18.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 68
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel and Lox', 'Bagel with smoked salmon, cream cheese, red onion, and capers', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad with Grilled Chicken', 'Caesar salad topped with grilled chicken breast', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Enchiladas', 'Tortillas filled with seasoned beef, cheese, and enchilada sauce', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 69
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Muffins', 'Homemade muffins with assorted flavors such as blueberry, banana nut, and chocolate chip', 6.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Wrap', 'Wrap with hummus, roasted vegetables, feta cheese, and tzatziki sauce', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Sushi Platter', 'Assortment of sushi rolls including California rolls, spicy tuna rolls, and shrimp tempura rolls', 20.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 70
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Smoothie Bowl', 'Smoothie bowl topped with granola, fruits, and coconut flakes', 8.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mushroom Quiche', 'Quiche filled with mushrooms, spinach, onions, and Swiss cheese', 10.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Lobster Tail', 'Grilled lobster tail served with drawn butter and lemon wedges', 22.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 71
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Croissant Sandwich', 'Croissant sandwich with eggs, bacon, and cheese', 7.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Quinoa Salad', 'Salad with quinoa, mixed greens, vegetables, and citrus vinaigrette', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Pork Tenderloin', 'Roasted pork tenderloin served with mashed potatoes and gravy', 16.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 72
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Hash', 'Hash browns with scrambled eggs, sausage, onions, and peppers', 8.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Salad', 'Salad with lettuce, cucumbers, tomatoes, olives, feta cheese, and Greek dressing', 9.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Wellington', 'Tender beef filet wrapped in puff pastry, served with mushroom duxelles and red wine sauce', 24.99, 700, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 73
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Classic French toast served with maple syrup and powdered sugar', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Falafel Wrap', 'Wrap with falafel balls, lettuce, tomatoes, cucumbers, and tahini sauce', 10.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Seafood Paella', 'Spanish rice dish with shrimp, mussels, clams, chorizo, and saffron', 18.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 74
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Tacos', 'Tacos with scrambled eggs, bacon, cheese, and salsa', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Vegetable Stir Fry', 'Stir-fried vegetables with tofu, served over rice noodles', 11.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Filet Mignon', 'Grilled beef tenderloin steak served with mashed potatoes and asparagus', 26.99, 650, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 75
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Belgian Waffles', 'Crispy Belgian waffles served with fresh berries and whipped cream', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Wrap', 'Wrap with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Lasagna', 'Lasagna made with layers of vegetables, marinara sauce, and cheese', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+-- Insertion 76
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Avocado Toast', 'Sourdough toast topped with mashed avocado, cherry tomatoes, and red pepper flakes', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Mediterranean Salad', 'Salad with mixed greens, olives, cherry tomatoes, cucumbers, feta cheese, and balsamic vinaigrette', 11.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Lamb Chops', 'Grilled lamb chops served with mint jelly and roasted potatoes', 22.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 77
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Burrito', 'Burrito filled with scrambled eggs, black beans, cheese, and salsa', 8.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caesar Salad with Shrimp', 'Caesar salad topped with grilled shrimp', 12.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Chicken Marsala', 'Chicken breast cooked in Marsala wine sauce with mushrooms', 17.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 78
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bowl', 'Breakfast bowl with scrambled eggs, hash browns, bacon, and cheese', 9.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Veggie Wrap', 'Wrap with hummus, grilled vegetables, spinach, and feta cheese', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Barbecue Ribs', 'Slow-cooked barbecue ribs served with coleslaw and cornbread', 19.99, 700, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 79
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Eggs Benedict', 'Poached eggs served on English muffins with Canadian bacon and hollandaise sauce', 11.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Gyro', 'Gyro sandwich with seasoned lamb, tzatziki sauce, lettuce, tomatoes, and onions', 12.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Curry', 'Curry dish with mixed vegetables in a spicy coconut milk sauce', 15.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 80
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Quesadilla', 'Quesadilla filled with scrambled eggs, cheese, and bacon, served with salsa', 10.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Cobb Salad', 'Salad with mixed greens, grilled chicken, avocado, bacon, tomatoes, eggs, and blue cheese dressing', 13.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Tacos', 'Tacos with seasoned ground beef, lettuce, cheese, and salsa', 14.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 81
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Peanut Butter Banana Toast', 'Toast topped with peanut butter, sliced bananas, and honey', 7.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Thai Chicken Salad', 'Salad with mixed greens, grilled chicken, mango, bell peppers, peanuts, and Thai peanut dressing', 12.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Salmon Fillet', 'Grilled salmon fillet served with lemon herb butter sauce', 18.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 82
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Bagel Sandwich', 'Bagel sandwich with scrambled eggs, bacon, and cheese', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Caprese Salad', 'Salad with fresh mozzarella, tomatoes, basil, and balsamic glaze', 10.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi', 'Shrimp sautéed in garlic butter and served over linguine pasta', 16.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 83
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Omelette', 'Omelette with choice of fillings such as cheese, ham, onions, peppers, and mushrooms', 10.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Quinoa Salad', 'Salad with quinoa, mixed vegetables, chickpeas, and lemon vinaigrette', 11.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef Stroganoff', 'Tender beef strips cooked in a creamy mushroom sauce, served over egg noodles', 17.99, 550, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 84
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Smoothie Bowl', 'Smoothie bowl topped with granola, fruit, and nuts', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Caesar Wrap', 'Wrap with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing', 9.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Pad Thai', 'Thai stir-fried rice noodles with tofu, vegetables, and peanuts', 14.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 85
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Bagel and Lox', 'Bagel topped with smoked salmon, cream cheese, red onions, and capers', 11.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Miso Soup', 'Japanese soup made with tofu, seaweed, and green onions', 8.99, 200, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Pork Tenderloin', 'Roasted pork tenderloin served with apple chutney and roasted vegetables', 20.99, 600, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 86
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Parfait', 'Parfait made with yogurt, granola, and mixed berries', 7.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Tuna Salad Sandwich', 'Sandwich with tuna salad, lettuce, and tomato on whole wheat bread', 9.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetarian Enchiladas', 'Enchiladas filled with black beans, corn, and cheese, topped with enchilada sauce', 13.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 87
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Belgian Waffle Breakfast Sandwich', 'Sandwich with sausage, egg, and cheese between two Belgian waffles', 10.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Chicken Noodle Soup', 'Classic soup with chicken, vegetables, and egg noodles', 8.99, 250, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Beef and Broccoli Stir Fry', 'Stir-fried beef and broccoli served over rice', 15.99, 450, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 88
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('Breakfast Sausage McMuffin', 'McMuffin sandwich with sausage, egg, and cheese', 6.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Greek Salad', 'Salad with romaine lettuce, tomatoes, cucumbers, olives, onions, and feta cheese', 9.99, 300, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Vegetable Lasagna', 'Lasagna with layers of pasta, marinara sauce, mixed vegetables, and cheese', 14.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
+
+-- Insertion 89
+INSERT INTO meals (meal_name, meal_description, price, calories, type_id)
+VALUES
+    ('French Toast', 'Thick slices of bread soaked in eggs and milk, then fried and served with syrup', 8.99, 350, (SELECT type_id FROM meal_types WHERE type_name = 'Breakfast')),
+    ('Taco Salad', 'Salad with lettuce, seasoned ground beef, tomatoes, cheese, tortilla strips, and salsa', 11.99, 400, (SELECT type_id FROM meal_types WHERE type_name = 'Lunch')),
+    ('Shrimp Scampi Pasta', 'Pasta dish with shrimp cooked in garlic butter and white wine sauce', 17.99, 500, (SELECT type_id FROM meal_types WHERE type_name = 'Dinner'));
