@@ -2,6 +2,7 @@ import { SIGN_IN } from "@/util/api";
 import axiosInstance from "@/util/axios";
 import setSession from "@/util/session";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEvent } from "react";
@@ -25,7 +26,7 @@ export default function Signin() {
       if (data.error) throw { err: data.message };
       setSession(requestBody.username, requestBody.password);
       alert("Signin success");
-      window.location.replace("/plan");
+      window.location.replace("/dashboard");
     } catch (error: any) {
       console.error({ error });
       alert(error.err || "Something went wrong");
@@ -39,9 +40,12 @@ export default function Signin() {
       </Head>
       <section>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <img
+          <Image
+            width={0}
+            height={0}
+            sizes="100vw"
             className="w-20 my-5"
-            src="https://seeklogo.com/images/M/mcdonald-s-logo-0D95A820B2-seeklogo.com.png"
+            src={"https://seeklogo.com/images/M/mcdonald-s-logo-0D95A820B2-seeklogo.com.png"}
             alt="logo"
           />
 
@@ -113,7 +117,7 @@ export default function Signin() {
                   Sign in
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don't have an account yet?
+                  Don&apos;t have an account yet?
                   <Link
                     href="/signup"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"

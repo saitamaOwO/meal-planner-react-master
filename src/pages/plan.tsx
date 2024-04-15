@@ -7,6 +7,8 @@ type MealPlan = {
   meal_type: string;
   meal_name: string;
   price: number;
+  calories: number;
+  total_calories: number;
 };
 
 export default function Plan() {
@@ -20,7 +22,6 @@ export default function Plan() {
       const { data } = await axiosInstance.post(MEAL_PLAN, { budget });
       console.log({ data });
       if (data.error) throw { err: data.message };
-      console.log(data.payload);
       setMealPlan(data.payload);
     } catch (error: any) {
       console.error(error);
@@ -46,7 +47,7 @@ export default function Plan() {
   }
 
   return (
-    <div className="container mx-auto p-4 sm:p-7 md:p-10">
+    <div className="mx-auto p-4 sm:p-7 md:p-10 pb-0 sm:pb-0 md:pb-0">
       <h1 className="text-3xl font-bold mb-4">Meal Planner</h1>
       <div className="mb-4">
         <label htmlFor="budget" className="mr-2">
@@ -69,37 +70,49 @@ export default function Plan() {
       </div>
       <div>
         {mealPlan.length > 0 ? (
-          <div className="relative overflow-x-auto rounded-md">
-            <table className="w-full text-left rtl:text-right text-zinc-950 dark:text-gray-200">
-              <thead className="font-bold uppercase bg-zinc-200 dark:bg-zinc-900 text-gray-800 dark:text-gray-200">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Day
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Meal Type
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Meal Name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Price
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-zinc-100 dark:bg-zinc-950">
-                {mealPlan.map(({ day, meal_type, meal_name, price }) => (
+          <>
+            <div className="relative overflow-x-auto rounded-md max-h-[70vh]">
+              <table className="w-full text-left rtl:text-right text-zinc-950 dark:text-gray-200  overflow-scroll">
+                <thead className="font-bold uppercase bg-zinc-200 dark:bg-zinc-900 text-gray-800 dark:text-gray-200">
                   <tr>
-                    <th scope="row" className="px-6 py-4">
-                      {day}
+                    <th scope="col" className="px-6 py-3">
+                      Day
                     </th>
-                    <td className="px-6 py-4">{meal_type}</td>
-                    <td className="px-6 py-4">{meal_name || "Can't afford"}</td>
-                    <td className="px-6 py-4">{price || "Can't afford"}</td>
+                    <th scope="col" className="px-6 py-3">
+                      Meal Type
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Meal Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Price
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Calories
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Total Calories
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-zinc-100 dark:bg-zinc-950 overflow-scroll">
+                  {mealPlan.map(
+                    ({ day, meal_type, meal_name, price, calories, total_calories }, index) => (
+                      <tr key={index}>
+                        <th scope="row" className="px-6 py-4">
+                          {day}
+                        </th>
+                        <td className="px-6 py-4">{meal_type}</td>
+                        <td className="px-6 py-4">{meal_name || "Can't afford"}</td>
+                        <td className="px-6 py-4">{price || "Can't afford"}</td>
+                        <td className="px-6 py-4">{calories || "Can't fetch"}</td>
+                        <td className="px-6 py-4">{total_calories || "Can't fetch"}</td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
             <div className="w-full my-4 flex justify-end px-10">
               <button
                 onClick={saveMealPlan}
@@ -108,7 +121,7 @@ export default function Plan() {
                 Save Plan
               </button>
             </div>
-          </div>
+          </>
         ) : (
           <p className="text-gray-400">No meal plan available.</p>
         )}

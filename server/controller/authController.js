@@ -1,7 +1,7 @@
 const pool = require("../database/database");
 
 async function signUp(req, res) {
-  const { username, name, email, password, height, age, weight } = req.body;
+  const { username, name, email, password, height, age, weight, gender } = req.body;
   try {
     // Check if the username already exists in the database
     const userExistsQuery = `
@@ -16,10 +16,10 @@ async function signUp(req, res) {
 
     // If the username doesn't exist, proceed with the sign-up process
     const insertQuery = `
-      INSERT INTO users (username, name, email, password, height, age, weight) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO users (username, name, email, password, height, age, weight, gender) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `;
-    const values = [username, name, email, password, height, age, weight];
+    const values = [username, name, email, password, height, age, weight, gender];
     await pool.query(insertQuery, values);
 
     return res.status(200).json({ error: false, message: `${name} has been saved` });

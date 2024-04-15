@@ -5,7 +5,7 @@ router.post("/signUp", signUpValidator, authController.signUp);
 router.post("/signIn", signInValidator, authController.signIn);
 
 function signUpValidator(req, res, next) {
-  const { username, name, email, password, height, age, weight } = req.body;
+  const { username, name, email, password, height, age, weight, gender } = req.body;
   try {
     if (!username) throw "username is required";
     if (!name) throw "name is required";
@@ -14,6 +14,9 @@ function signUpValidator(req, res, next) {
     if (!height) throw "height is required";
     if (!age) throw "age is required";
     if (!weight) throw "weight is required";
+    if (!gender) throw "gender is required";
+    console.log({ gender });
+    if (gender != "M" && gender != "F") throw "Invalid gender";
   } catch (err) {
     console.error(err);
     return res.status(400).json({ error: true, message: err });

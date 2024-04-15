@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-
+import Cookies from "js-cookie";
 export default function Home() {
   return (
     <>
@@ -21,6 +21,14 @@ export default function Home() {
         >
           Sign Up
         </Link>
+        {Cookies.get("username") && Cookies.get("password") && (
+          <Link
+            href={"/dashboard"}
+            className="w-32 flex items-center justify-center py-1.5 border border-blue-500 bg-blue-500 rounded-md my-2 hover:bg-black transition-all"
+          >
+            Dashboard
+          </Link>
+        )}
       </section>
     </>
   );

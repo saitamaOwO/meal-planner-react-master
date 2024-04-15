@@ -3,7 +3,7 @@ const pool = require("../database/database");
 async function mealPlan(req, res) {
   const { budget } = req.body;
   try {
-    const result = await pool.query(`SELECT * FROM generate_meal_plan(${budget})`);
+    const result = await pool.query(`SELECT * FROM generates_plans(${budget})`);
     return res
       .status(200)
       .json({ error: false, message: "Meal plan retrived", payload: result.rows });
@@ -24,16 +24,22 @@ async function savePlan(req, res) {
   const { plan, budget } = req.body;
 
   try {
-    // Iterate over each meal in the plan
     for (const meal of plan) {
-      const { day, meal_type, meal_name, price } = meal;
-      
-      // Insert the meal into the all_plan_details table
+      const { day, meal_type, meal_name, price, calories, total_calories } = meal;
       const query = `
-        INSERT INTO all_plan_details (username, day, meal_type, meal_name, price, budget) 
-        VALUES ($1, $2, $3, $4, $5, $6)
+        INSERT INTO all_plan_details (username, day, meal_type, meal_name, price, budget, calories, total_calories) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       `;
-      await pool.query(query, [username, day, meal_type, meal_name, price, budget]);
+      await pool.query(query, [
+        username,
+        day,
+        meal_type,
+        meal_name,
+        price,
+        budget,
+        calories,
+        total_calories,
+      ]);
     }
 
     return res.status(200).json({ error: false, message: "Plan saved" });
@@ -43,5 +49,18 @@ async function savePlan(req, res) {
   }
 }
 
+async function getPlan(req, res) {
+  const username = req.username;
+  const date = req.params.date;
+  try {
+    const savedPlan = await pool.query(`select *from get_dmeals('${date}', '${username}');`);
+    if (!savedPlan.rowCount)
+      return res.status(404).json({ error: true, message: "No saved plans found" });
+    return res.status(200).json({ error: false, message: "Plan data", payload: savedPlan.rows });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: true, message: "Internal server error" });
+  }
+}
 
-module.exports = { mealPlan, savePlan };
+module.exports = { mealPlan, savePlan, getPlan };

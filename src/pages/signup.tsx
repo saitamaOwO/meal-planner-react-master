@@ -1,6 +1,7 @@
 import { SIGN_UP } from "@/util/api";
 import axiosInstance from "@/util/axios";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { FormEvent } from "react";
 export default function Signup() {
@@ -15,6 +16,7 @@ export default function Signup() {
     const age = form.get("age") as string;
     const height = form.get("height") as string;
     const weight = form.get("weight") as string;
+    const gender = form.get("gender") as string;
     const requestBody = {
       username,
       name,
@@ -23,6 +25,7 @@ export default function Signup() {
       age,
       height,
       weight,
+      gender,
     };
     console.log(requestBody);
     signUp(requestBody);
@@ -35,6 +38,7 @@ export default function Signup() {
     age: string;
     height: string;
     weight: string;
+    gender: string;
   }) {
     try {
       const { data } = await axiosInstance.post(SIGN_UP, requestBody);
@@ -53,9 +57,12 @@ export default function Signup() {
       </Head>
       <section>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <img
+          <Image
+            width={0}
+            height={0}
+            sizes="100vw"
             className="w-20 my-5"
-            src="https://seeklogo.com/images/M/mcdonald-s-logo-0D95A820B2-seeklogo.com.png"
+            src={"https://seeklogo.com/images/M/mcdonald-s-logo-0D95A820B2-seeklogo.com.png"}
             alt="logo"
           />
 
@@ -175,6 +182,23 @@ export default function Signup() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-zinc-900 dark:border-zinc-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
+                </div>
+                <div>
+                  <label
+                    htmlFor="gender"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm dark:border-zinc-800 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-900 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  >
+                    <option disabled>Choose your Gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                  </select>
                 </div>
                 <div className="flex items-start">
                   <div className="flex items-center h-5">

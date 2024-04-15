@@ -13,6 +13,7 @@ app.use("/", (req, res, next) => {
 
 const authRoute = require("./route/authRoute");
 const planRoute = require("./route/planRoute");
+const profileRoute = require("./route/profileRoute");
 
 async function authenticate(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -40,6 +41,7 @@ app.use("/api", authenticate);
 
 app.use("/auth", authRoute);
 app.use("/api/plan", planRoute);
+app.use("/api/profile", profileRoute);
 
 app.all("/", (req, res) =>
   res.status(200).json({ error: false, message: "Backend working properly", payload: req.body })
