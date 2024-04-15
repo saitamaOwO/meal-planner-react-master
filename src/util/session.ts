@@ -6,7 +6,6 @@ export function signOut() {
   Cookies.remove("username");
   Cookies.remove("password");
   alert("Logout Successfull");
-  window.location.reload();
   window.location.replace("/signin");
 }
 export default function setSession(username?: string, password?: string) {
