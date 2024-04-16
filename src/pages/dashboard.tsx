@@ -1,8 +1,9 @@
-import { GET_PLAN } from "@/util/api";
+"use client";
+import { FormEvent, useState } from "react";
 import axiosInstance from "@/util/axios";
+import { GET_PLAN } from "@/util/api";
 import Head from "next/head";
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
 
 type plan = {
   username: string;
@@ -14,7 +15,7 @@ type plan = {
   budget: string;
   calories: string;
   total_calories: string;
-  updated_budget: string
+  updated_budget: string;
 };
 export default function Dashboard() {
   const [savedPlan, setSavedPlans] = useState<[plan] | null>();
@@ -32,7 +33,6 @@ export default function Dashboard() {
       alert(error.err || "Something went wrong");
     }
   }
-  function handleSubmit() { }
   return (
     <>
       <Head>
@@ -40,9 +40,7 @@ export default function Dashboard() {
         <meta name="description" content="Meal tracker system Dashboard" />
       </Head>
       <section className="w-full min-h-screen flex flex-col items-center justify-center">
-        <form 
-        className="flex items-center gap-x-4"
-        onSubmit={getSavedPlan}>
+        <form className="flex items-center gap-x-4" onSubmit={getSavedPlan}>
           <p>Select date</p>
           <input
             type="date"
@@ -51,7 +49,9 @@ export default function Dashboard() {
           />
           <button
             className="flex items-center justify-center py-1.5 px-4 border border-blue-500 bg-blue-500 rounded-md my-2 hover:bg-black transition-all"
-            type="submit">Submit
+            type="submit"
+          >
+            Submit
           </button>
         </form>
         {savedPlan?.length && (
@@ -115,7 +115,7 @@ export default function Dashboard() {
                         <td className="px-6 py-4">{budget}</td>
                         <td className="px-6 py-4">{calories}</td>
                         <td className="px-6 py-4">{total_calories}</td>
-                        <td className="px-6 py-4">{updated_budget}</td> 
+                        <td className="px-6 py-4">{updated_budget}</td>
                       </tr>
                     )
                   )}

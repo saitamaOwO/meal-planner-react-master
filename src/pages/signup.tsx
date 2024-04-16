@@ -1,3 +1,4 @@
+"use client";
 import { SIGN_UP } from "@/util/api";
 import axiosInstance from "@/util/axios";
 import Head from "next/head";
@@ -229,10 +230,10 @@ export default function Signup() {
                   Create an account
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Already have an account?{" "}
+                  Already have an account?
                   <Link
                     href="/signin"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    className="font-medium ml-1 text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Signin
                   </Link>

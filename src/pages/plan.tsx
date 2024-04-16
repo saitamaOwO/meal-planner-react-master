@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import axiosInstance from "@/util/axios";
 import { MEAL_PLAN, SAVE_PLAN } from "@/util/api";

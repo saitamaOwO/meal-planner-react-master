@@ -1,3 +1,4 @@
+"use client";
 import { SIGN_IN } from "@/util/api";
 import axiosInstance from "@/util/axios";
 import setSession from "@/util/session";
@@ -116,11 +117,12 @@ export default function Signin() {
                 >
                   Sign in
                 </button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                <p className="text-sm  font-light text-gray-500 dark:text-gray-400">
                   Don&apos;t have an account yet?
                   <Link
                     href="/signup"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                    className="font-medium ml-1 text-primary-600 hover:underline dark:text-primary-500"
+                  >
                     Sign up
                   </Link>
                 </p>
