@@ -2,7 +2,7 @@ import { GET_PLAN } from "@/util/api";
 import axiosInstance from "@/util/axios";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 type plan = {
   username: string;
@@ -14,12 +14,14 @@ type plan = {
   budget: string;
   calories: string;
   total_calories: string;
+  updated_budget: string
 };
 export default function Dashboard() {
   const [savedPlan, setSavedPlans] = useState<[plan] | null>();
   const [date, setDate] = useState<string>("");
 
-  async function getSavedPlan(date: string) {
+  async function getSavedPlan(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     try {
       const { data } = await axiosInstance.get(GET_PLAN + "/" + date);
       if (data.error) throw { err: data.message };
@@ -30,7 +32,7 @@ export default function Dashboard() {
       alert(error.err || "Something went wrong");
     }
   }
-  function handleSubmit() {}
+  function handleSubmit() { }
   return (
     <>
       <Head>
@@ -38,14 +40,20 @@ export default function Dashboard() {
         <meta name="description" content="Meal tracker system Dashboard" />
       </Head>
       <section className="w-full min-h-screen flex flex-col items-center justify-center">
-        <div>
+        <form 
+        className="flex items-center gap-x-4"
+        onSubmit={getSavedPlan}>
           <p>Select date</p>
           <input
             type="date"
             className="bg-zinc-900 outline-none text-white border px-4 py-2 rounded-md"
-            onChange={(e) => getSavedPlan(e.target.value)}
+            onChange={(e) => setDate(e.target.value)}
           />
-        </div>
+          <button
+            className="flex items-center justify-center py-1.5 px-4 border border-blue-500 bg-blue-500 rounded-md my-2 hover:bg-black transition-all"
+            type="submit">Submit
+          </button>
+        </form>
         {savedPlan?.length && (
           <>
             <h1 className="text-2xl uppercase font-bold mb-4">Saved plan</h1>
@@ -77,6 +85,9 @@ export default function Dashboard() {
                     <th scope="col" className="px-6 py-3">
                       Total Calories
                     </th>
+                    <th scope="col" className="px-6 py-3">
+                      U_Budget
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-zinc-100 dark:bg-zinc-950 overflow-scroll">
@@ -91,6 +102,7 @@ export default function Dashboard() {
                         budget,
                         calories,
                         total_calories,
+                        updated_budget,
                       },
                       index
                     ) => (
@@ -103,6 +115,7 @@ export default function Dashboard() {
                         <td className="px-6 py-4">{budget}</td>
                         <td className="px-6 py-4">{calories}</td>
                         <td className="px-6 py-4">{total_calories}</td>
+                        <td className="px-6 py-4">{updated_budget}</td> 
                       </tr>
                     )
                   )}

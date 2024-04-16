@@ -120,8 +120,7 @@ export default function Signin() {
                   Don&apos;t have an account yet?
                   <Link
                     href="/signup"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
+                    className="font-medium text-primary-600 hover:underline dark:text-primary-500">
                     Sign up
                   </Link>
                 </p>

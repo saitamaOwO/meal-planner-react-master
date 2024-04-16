@@ -9,6 +9,7 @@ type MealPlan = {
   price: number;
   calories: number;
   total_calories: number;
+  updated_budget: number;
 };
 
 export default function Plan() {
@@ -93,11 +94,14 @@ export default function Plan() {
                     <th scope="col" className="px-6 py-3">
                       Total Calories
                     </th>
+                    <th scope="col" className="px-6 py-3">
+                      Budget
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-zinc-100 dark:bg-zinc-950 overflow-scroll">
                   {mealPlan.map(
-                    ({ day, meal_type, meal_name, price, calories, total_calories }, index) => (
+                    ({ day, meal_type, meal_name, price, calories, total_calories, updated_budget }, index) => (
                       <tr key={index}>
                         <th scope="row" className="px-6 py-4">
                           {day}
@@ -107,6 +111,7 @@ export default function Plan() {
                         <td className="px-6 py-4">{price || "Can't afford"}</td>
                         <td className="px-6 py-4">{calories || "Can't fetch"}</td>
                         <td className="px-6 py-4">{total_calories || "Can't fetch"}</td>
+                        <td className="px-6 py-4">{updated_budget || "Can't fetch"}</td> 
                       </tr>
                     )
                   )}

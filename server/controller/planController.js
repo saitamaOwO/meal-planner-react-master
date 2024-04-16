@@ -25,10 +25,10 @@ async function savePlan(req, res) {
 
   try {
     for (const meal of plan) {
-      const { day, meal_type, meal_name, price, calories, total_calories } = meal;
+      const { day, meal_type, meal_name, price, calories, total_calories, updated_budget } = meal;
       const query = `
-        INSERT INTO all_plan_details (username, day, meal_type, meal_name, price, budget, calories, total_calories) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        INSERT INTO all_plan_details (username, day, meal_type, meal_name, price, budget, calories, total_calories, updated_budget) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       `;
       await pool.query(query, [
         username,
@@ -39,6 +39,7 @@ async function savePlan(req, res) {
         budget,
         calories,
         total_calories,
+        updated_budget,
       ]);
     }
 
